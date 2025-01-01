@@ -1,3 +1,4 @@
+import * as MediaLibrary from "expo-media-library";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { View, StyleSheet } from "react-native";
 import * as ImagePicker from "expo-image-picker";
@@ -16,6 +17,8 @@ import EmojiSticker from "../components/EmojiSticker";
 const PlaceholderImage = require("@/assets/images/image.jpg");
 
 export default function Index() {
+  const [status, requestPermission] = MediaLibrary.usePermissions();
+
   const [selectedImage, setSelectedImage] = useState<string | undefined>(
     undefined
   );
@@ -54,6 +57,10 @@ export default function Index() {
   const onSaveImageAsync = async () => {
     // we will implement this later
   };
+
+  if (status === null) {
+    requestPermission();
+  }
 
   return (
     <GestureHandlerRootView style={styles.container}>
